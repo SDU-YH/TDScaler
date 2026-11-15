@@ -1,2 +1,3 @@
 # TDScaler
-# This repository provides the TDScaler implementation and the data generated during its training process.
+# This repository provides the TDScaler implementation, workload traces, and performance profiling data for the GPU instances used in the experiments.
+
