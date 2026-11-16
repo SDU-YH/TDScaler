@@ -4,14 +4,11 @@ from typing import Optional, Sequence, Tuple
 import torch
 from torch import nn
 from algorithms.reference_dtqn import ReferenceDTQN
-from dtqn.networks.representations import ObservationEmbeddingRepresentation
 
 
 @dataclass(frozen=True)
 #图结构
 class GraphLayout:
-    pass
-
     slot_counts: Tuple[int, ...]
 
     @property
@@ -68,8 +65,6 @@ class GraphLayout:
 
 #节点特征预处理
 class GraphFeatureScaling(nn.Module):
-    pass
-
     def __init__(self, layout: GraphLayout, feature_dim: int):
         super().__init__()
         scales = torch.ones(layout.node_count, feature_dim)
@@ -98,8 +93,6 @@ class GraphFeatureScaling(nn.Module):
 
 #节点
 class MaskedRelationAttention(nn.Module):
-    pass
-
     def __init__(self, hidden_dim: int, heads: int):
         super().__init__()
         if hidden_dim % heads:
@@ -114,8 +107,6 @@ class MaskedRelationAttention(nn.Module):
         self.key = nn.Linear(hidden_dim, hidden_dim)
         self.value = nn.Linear(hidden_dim, hidden_dim)
         self.output = nn.Linear(hidden_dim, hidden_dim)
-
-        self.alpha: Optional[torch.Tensor] = None
 
     def _heads(self, values: torch.Tensor) -> torch.Tensor:
         batch, nodes, _ = values.shape
@@ -143,7 +134,6 @@ class MaskedRelationAttention(nn.Module):
         row_max = torch.where(has_neighbor, row_max, torch.zeros_like(row_max))
         weights = torch.exp(safe_scores - row_max) * valid.to(scores.dtype)
         weights = weights / weights.sum(dim=-1, keepdim=True).clamp_min(1e-9)
-        self.alpha = weights.detach()
         message = torch.matmul(weights, v).transpose(1, 2).reshape(
             queries.shape[0], queries.shape[1], self.hidden_dim
         )
@@ -152,8 +142,6 @@ class MaskedRelationAttention(nn.Module):
         return message * valid_output.unsqueeze(-1).to(message.dtype)
 #语义
 class HeterogeneousGraphAttentionLayer(nn.Module):
-    pass
-
     def __init__(self, hidden_dim: int, heads: int, layout: GraphLayout):
         super().__init__()
         self.layout = layout
@@ -176,8 +164,6 @@ class HeterogeneousGraphAttentionLayer(nn.Module):
         self.type_norm = nn.LayerNorm(hidden_dim)
         self.cold_norm = nn.LayerNorm(hidden_dim)
         self.running_norm = nn.LayerNorm(hidden_dim)
-        self.last_center_type_attention: Optional[torch.Tensor] = None
-        self.last_center_semantic_attention: Optional[torch.Tensor] = None
         slot_types = torch.as_tensor(layout.slot_type_indices, dtype=torch.long)
         self.register_buffer(
             "type_slot_allowed",
@@ -192,11 +178,11 @@ class HeterogeneousGraphAttentionLayer(nn.Module):
         views: torch.Tensor,
         valid: torch.Tensor,
         scorer: nn.Module,
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> torch.Tensor:
         scores = scorer(views).squeeze(-1).masked_fill(~valid, -1e9)
         weights = torch.softmax(scores, dim=-1) * valid.to(scores.dtype)
         weights = weights / weights.sum(dim=-1, keepdim=True).clamp_min(1e-9)
-        return (weights.unsqueeze(-1) * views).sum(dim=2), weights.detach()
+        return (weights.unsqueeze(-1) * views).sum(dim=2)
 
     def forward(
         self,
@@ -232,7 +218,6 @@ class HeterogeneousGraphAttentionLayer(nn.Module):
             center, types, center_to_types, type_valid, center_valid
         )
 
-        self.last_center_type_attention = self.center_type_attention.alpha
         types_from_center = self.center_type_attention(
             types, center, type_to_center, center_valid, type_valid
         )
@@ -261,10 +246,9 @@ class HeterogeneousGraphAttentionLayer(nn.Module):
         center_view_valid = torch.ones(
             batch, 1, 2, dtype=torch.bool, device=center.device
         )
-        center_message, center_semantic_attention = self._fuse_semantics(
+        center_message = self._fuse_semantics(
             center_views, center_view_valid, self.center_semantic_score
         )
-        self.last_center_semantic_attention = center_semantic_attention
 
         cold_by_type = torch.einsum(
             "ns,bs->bn", type_to_slots.float(), cold_valid.float()
@@ -278,7 +262,7 @@ class HeterogeneousGraphAttentionLayer(nn.Module):
         type_view_valid = torch.stack(
             (type_valid, cold_by_type, running_by_type), dim=2
         )
-        type_message, _ = self._fuse_semantics(
+        type_message = self._fuse_semantics(
             type_views, type_view_valid, self.type_semantic_score
         )
 
@@ -293,8 +277,6 @@ class HeterogeneousGraphAttentionLayer(nn.Module):
         )
 
 class HANEncoder(nn.Module):
-    pass
-
     def __init__(
         self,
         node_count: int,
@@ -333,7 +315,7 @@ class HANEncoder(nn.Module):
 
     def forward(
         self, nodes: torch.Tensor, node_mask: Optional[torch.Tensor] = None
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> torch.Tensor:
         if nodes.ndim != 3 or nodes.shape[1] != self.node_count:
             raise ValueError(
                 f"expected [batch,{self.node_count},features], got {tuple(nodes.shape)}"
@@ -377,12 +359,9 @@ class HANEncoder(nn.Module):
                 running_valid,
             )
 
-        encoded_nodes = torch.cat((center, load, types, cold, running), dim=1)
-        return center.squeeze(1), encoded_nodes
+        return center.squeeze(1)
 
 class GraphObservationEmbedding(nn.Module):
-    pass
-
     def __init__(
         self,
         graph_encoder: nn.Module,
@@ -413,12 +392,10 @@ class GraphObservationEmbedding(nn.Module):
         node_mask = observations[
             ..., self.node_mask_offset : self.action_mask_offset
         ].reshape(batch * steps, self.node_count).bool()
-        center_embedding, _ = self.graph_encoder(nodes, node_mask)
+        center_embedding = self.graph_encoder(nodes, node_mask)
         return center_embedding.reshape(batch, steps, -1)
 
 class TemporalMaskedDTQN(ReferenceDTQN):
-    pass
-
     def __init__(
         self,
         graph_encoder: nn.Module,
@@ -536,8 +513,6 @@ class TemporalMaskedDTQN(ReferenceDTQN):
         return q_values.masked_fill(~masks, torch.finfo(q_values.dtype).min)
 
 class HANMaskedDTQN(TemporalMaskedDTQN):
-    pass
-
     def __init__(
         self,
         node_count: int,
