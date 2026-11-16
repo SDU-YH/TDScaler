@@ -120,7 +120,7 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
     def epsilon(self) -> float:
         return float(self.epsilon_schedule.val)
 
-    # 拉格朗日乘子
+    # 奖励函数参数
     def set_lagrange_multiplier(self, value: float) -> None:
         if not np.isfinite(value) or value < 0:
             raise ValueError("lagrange multiplier must be finite and non-negative")
