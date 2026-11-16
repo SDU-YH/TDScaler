@@ -8,13 +8,11 @@ import torch
 
 from environment.config import TrainingConfig
 from algorithms.networks import GRAPH_SCHEMA, GRAPH_ENCODER_VERSION, GraphLayout, build_masked_dtqn
-from algorithms.reference_dtqn import ReferenceDtqnAgent, ReferenceLinearAnneal, reference_source_files
+from algorithms.reference_dtqn import ReferenceDtqnAgent, ReferenceLinearAnneal
 
 from utils.random import RNG as ReferenceRNG
 
 class MaskedDTQNAgent(ReferenceDtqnAgent):
-    pass
-
     # 初始化网络、缓冲区
     def __init__(
         self,
@@ -25,7 +23,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
         seed: int,
         instance_slot_counts: Optional[tuple[int, ...]] = None,
         device: str = "cpu",
-        lagrange_multiplier: float = 0.0,
         max_episode_steps: int = 1024,
     ):
         self.config = config
@@ -49,9 +46,7 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
             config.epsilon_end,
             max(1, config.epsilon_decay_steps),
         )
-        self._seed = int(seed)
-        self._max_episode_steps = max(1, int(max_episode_steps))
-        ReferenceRNG.rng = np.random.Generator(np.random.PCG64(seed=self._seed))
+        ReferenceRNG.rng = np.random.Generator(np.random.PCG64(seed=int(seed)))
 
         network_args = dict(
             node_count=self.node_count,
@@ -73,7 +68,7 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
             buffer_size=config.replay_capacity,
             device=torch.device(device),
             env_obs_length=self.combined_observation_dim,
-            max_env_steps=self._max_episode_steps,
+            max_env_steps=max(1, int(max_episode_steps)),
             obs_mask=0.0,
             num_actions=self.action_count,
             is_discrete_env=False,
@@ -90,7 +85,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
         self.replay_buffer.episode_lengths = (
             self.replay_buffer.episode_lengths.astype(np.int32)
         )
-        self.set_lagrange_multiplier(lagrange_multiplier)
 
     # 策略网络
     @property
@@ -102,10 +96,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
     def target(self):
         return self.target_network
 
-    # buffer
-    @property
-    def replay(self):
-        return self.replay_buffer
     # 步数
     @property
     def steps(self) -> int:
@@ -119,12 +109,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
     @property
     def epsilon(self) -> float:
         return float(self.epsilon_schedule.val)
-
-    # 奖励函数参数
-    def set_lagrange_multiplier(self, value: float) -> None:
-        if not np.isfinite(value) or value < 0:
-            raise ValueError("lagrange multiplier must be finite and non-negative")
-        self.lagrange_multiplier = float(value)
 
     # 拼接观测向量
     def _combined_observation(
@@ -152,7 +136,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
 
     # 动作掩蔽
     def _effective_action_mask(self, action_mask: np.ndarray) -> np.ndarray:
-        pass
         environment_mask = np.asarray(action_mask, dtype=bool)
         if (
             environment_mask.shape != (self.action_count,)
@@ -211,7 +194,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
         action_mask: np.ndarray,
         node_mask: Optional[np.ndarray] = None,
         anneal_epsilon: bool = True,
-        **_: object,
     ) -> None:
 
         combined = self._combined_observation(
@@ -256,7 +238,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
         torch.save(
             {
                 "architecture": self._architecture_metadata(),
-                "reference_source_files": reference_source_files("tgrl"),
                 "online": self.policy_network.state_dict(),
                 "target": self.target_network.state_dict(),
                 "optimizer": self.optimizer.state_dict(),
@@ -264,7 +245,6 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
                 "steps": self.environment_steps,
                 "updates": self.num_train_steps,
                 "epsilon": self.epsilon,
-                "lagrange_multiplier": self.lagrange_multiplier,
             },
             path,
         )
@@ -307,7 +287,4 @@ class MaskedDTQNAgent(ReferenceDtqnAgent):
         self.environment_steps = int(checkpoint.get("steps", 0))
         self.num_train_steps = int(checkpoint.get("updates", 0))
         self.epsilon_schedule.val = float(checkpoint.get("epsilon", self.epsilon))
-        self.lagrange_multiplier = float(
-            checkpoint.get("lagrange_multiplier", self.lagrange_multiplier)
-        )
         self.target_network.eval()
