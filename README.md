@@ -1,5 +1,5 @@
 # TDScaler
-This repository provides the TDScaler implementation, workload traces, and performance profiling data for the GPU instances used in the experiments.
+This repository provides the TDScaler implementation, workload traces, and performance profiling data for the GPU instances used in the experiments. To facilitate readability and usability, the source code is currently being organized and will be progressively uploaded to this repository.
 
 # GPU Instance Requirements
 Operating System: Ubuntu 22.04.5
