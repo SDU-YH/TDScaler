@@ -15,7 +15,7 @@ from utils.random import RNG as ReferenceRNG
 class MaskedDTQNAgent(ReferenceDtqnAgent):
     pass
 
-    # 初始化图布局、HAN-DTQN 网络、回放缓冲区、优化器和探索率调度器。
+    # 初始化网络、缓冲区
     def __init__(
         self,
         node_count: int,
