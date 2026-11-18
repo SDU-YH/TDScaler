@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "profile_files": [
+    "1xL20_Qwen3-14B.json",
+    "2xA10_Qwen3-14B.json",
+    "2xL20_Qwen3-14B.json"
+  ]
+}

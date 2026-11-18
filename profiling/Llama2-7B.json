@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "profile_files": [
+    "1xA10_Llama2-7B.json",
+    "1xL20_Llama2-7B.json",
+    "2xA10_Llama2-7B.json",
+    "2xL20_Llama2-7B.json",
+    "2xT4_Llama2-7B.json"
+  ]
+}
