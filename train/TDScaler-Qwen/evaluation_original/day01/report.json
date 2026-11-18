@@ -1,0 +1,20 @@
+{
+  "environment": "B.3x",
+  "method": "TDScaler",
+  "checkpoint": "evaluate/checkpoints/TDScaler-Qwen.pt",
+  "requests": 8473,
+  "observed_first_tokens": 8473,
+  "missing_first_token": 0,
+  "sla_violation_count": 24,
+  "sla_violation_percent": 0.28325268499940986,
+  "p50_ttft_s": 0.5676918273020419,
+  "p99_ttft_s": 0.8997505068991452,
+  "max_ttft_s": 1.5110556114377687,
+  "workload_sha256": "3e8ca898abae4ca3894827cc4c0585f146b8258b043fd14e6e5e265788d7f7a4",
+  "decisions": 1008,
+  "min_interval_s": 60.0,
+  "max_interval_s": 900.0,
+  "completed_requests": 8472,
+  "completed_output_tokens": 2601418,
+  "mean_output_token_throughput_tps": 30.10900462962963
+}

@@ -1,0 +1,20 @@
+{
+  "environment": "A.5x",
+  "method": "TDScaler",
+  "checkpoint": "evaluate/checkpoints/TDScaler-Llama-Azure.pt",
+  "requests": 17706,
+  "observed_first_tokens": 17706,
+  "missing_first_token": 0,
+  "sla_violation_count": 17,
+  "sla_violation_percent": 0.09601265107873037,
+  "p50_ttft_s": 0.27060074446490034,
+  "p99_ttft_s": 0.6277703131783275,
+  "max_ttft_s": 8.829913706533262,
+  "workload_sha256": "fd86f81b24fad77b96dc8436128fffc04b48fec46a63deed26e9f7c3239e5bdb",
+  "decisions": 1440,
+  "min_interval_s": 60.0,
+  "max_interval_s": 60.0,
+  "completed_requests": 17705,
+  "completed_output_tokens": 2079229,
+  "mean_output_token_throughput_tps": 24.06515046296296
+}

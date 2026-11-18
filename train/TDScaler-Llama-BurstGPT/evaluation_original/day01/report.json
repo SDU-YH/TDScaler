@@ -1,0 +1,20 @@
+{
+  "environment": "A.3x",
+  "method": "TDScaler",
+  "checkpoint": "evaluate/checkpoints/TDScaler-Llama-BurstGPT.pt",
+  "requests": 8473,
+  "observed_first_tokens": 8473,
+  "missing_first_token": 0,
+  "sla_violation_count": 57,
+  "sla_violation_percent": 0.6727251268735985,
+  "p50_ttft_s": 0.40816010205162456,
+  "p99_ttft_s": 0.9841009124234553,
+  "max_ttft_s": 1.4605131436892407,
+  "workload_sha256": "3e8ca898abae4ca3894827cc4c0585f146b8258b043fd14e6e5e265788d7f7a4",
+  "decisions": 1008,
+  "min_interval_s": 60.0,
+  "max_interval_s": 900.0,
+  "completed_requests": 8473,
+  "completed_output_tokens": 2602370,
+  "mean_output_token_throughput_tps": 30.12002314814815
+}
