@@ -7,7 +7,7 @@ This repository provides the TDScaler implementation, workload traces, and perfo
 - vLLM Version: 0.26.0
 - LLM Models: Llama-2-7B and Qwen3-14B
 
-## Experiment groups
+## Experiment Groups
 
 - `A.3x`: Llama2-7B, BurstGPT/ShareGPT, three instance types.
 - `A.5x`: Llama2-7B, Azure, five instance types.
