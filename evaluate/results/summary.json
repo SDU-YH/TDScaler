@@ -1,0 +1,38 @@
+[
+  {
+    "group": "A.3x",
+    "cost": 689.1030952380953,
+    "sla_violation_percent": 0.6852237732975442,
+    "normalized_nce": 2.150600065651277
+  },
+  {
+    "group": "A.5x",
+    "cost": 404.3906666666667,
+    "sla_violation_percent": 0.1728543026544591,
+    "normalized_nce": 1.8578479534971881
+  },
+  {
+    "group": "B.3x",
+    "cost": 1770.5980952380949,
+    "sla_violation_percent": 0.47068098617471454,
+    "normalized_nce": 1.1989180778228825
+  },
+  {
+    "group": "SQL-A.3x",
+    "cost": 710.9816666666668,
+    "sla_violation_percent": 0.179856093026701,
+    "normalized_nce": 2.109269259322711
+  },
+  {
+    "group": "SQL-A.5x",
+    "cost": 243.10399999999998,
+    "sla_violation_percent": 0.2705929654126176,
+    "normalized_nce": 1.9105057857480736
+  },
+  {
+    "group": "SQL-B.3x",
+    "cost": 1038.5709523809533,
+    "sla_violation_percent": 0.3754396889719019,
+    "normalized_nce": 1.5507852962860047
+  }
+]

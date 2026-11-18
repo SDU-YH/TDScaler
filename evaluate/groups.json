@@ -1,0 +1,78 @@
+{
+  "A.3x": {
+    "config": "evaluate/configs/TDScaler-Llama-BurstGPT.json",
+    "checkpoint": "evaluate/checkpoints/TDScaler-Llama-BurstGPT.pt",
+    "model": "llama-2-7b",
+    "instance_types": [
+      "1xA10",
+      "2xT4",
+      "1xL20"
+    ],
+    "token_source": "dataset",
+    "request_scale": 2.5
+  },
+  "A.5x": {
+    "config": "evaluate/configs/TDScaler-Llama-Azure.json",
+    "checkpoint": "evaluate/checkpoints/TDScaler-Llama-Azure.pt",
+    "model": "llama-2-7b",
+    "instance_types": [
+      "1xA10",
+      "2xT4",
+      "1xL20",
+      "2xA10",
+      "2xL20"
+    ],
+    "token_source": "trace",
+    "request_scale": 1.0
+  },
+  "B.3x": {
+    "config": "evaluate/configs/TDScaler-Qwen.json",
+    "checkpoint": "evaluate/checkpoints/TDScaler-Qwen.pt",
+    "model": "qwen3-14b",
+    "instance_types": [
+      "1xL20",
+      "2xA10",
+      "2xL20"
+    ],
+    "token_source": "dataset",
+    "request_scale": 2.5
+  },
+  "SQL-A.3x": {
+    "config": "evaluate/configs/TDScaler-Llama-BurstGPT-BIRD.json",
+    "checkpoint": "evaluate/checkpoints/TDScaler-Llama-BurstGPT-BIRD.pt",
+    "model": "llama-2-7b",
+    "instance_types": [
+      "1xA10",
+      "2xT4",
+      "1xL20"
+    ],
+    "token_source": "dataset",
+    "request_scale": 5.0
+  },
+  "SQL-A.5x": {
+    "config": "evaluate/configs/TDScaler-Llama-Azure-BIRD.json",
+    "checkpoint": "evaluate/checkpoints/TDScaler-Llama-Azure-BIRD.pt",
+    "model": "llama-2-7b",
+    "instance_types": [
+      "1xA10",
+      "2xT4",
+      "1xL20",
+      "2xA10",
+      "2xL20"
+    ],
+    "token_source": "dataset",
+    "request_scale": 1.0
+  },
+  "SQL-B.3x": {
+    "config": "evaluate/configs/TDScaler-Qwen-BIRD.json",
+    "checkpoint": "evaluate/checkpoints/TDScaler-Qwen-BIRD.pt",
+    "model": "qwen3-14b",
+    "instance_types": [
+      "1xL20",
+      "2xA10",
+      "2xL20"
+    ],
+    "token_source": "dataset",
+    "request_scale": 5.0
+  }
+}

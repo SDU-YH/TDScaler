@@ -1,0 +1,166 @@
+{
+  "A.3x": {
+    "1": {
+      "cost_reference": 3125.0791961465147,
+      "decision_reference": 1440.0
+    },
+    "2": {
+      "cost_reference": 3045.3259592964478,
+      "decision_reference": 1440.0
+    },
+    "3": {
+      "cost_reference": 3119.8748626291167,
+      "decision_reference": 1440.0
+    },
+    "4": {
+      "cost_reference": 3218.5,
+      "decision_reference": 1440.0
+    },
+    "5": {
+      "cost_reference": 3166.5851238519167,
+      "decision_reference": 1440.0
+    },
+    "6": {
+      "cost_reference": 3004.812751376015,
+      "decision_reference": 1440.0
+    },
+    "7": {
+      "cost_reference": 3091.6797986867996,
+      "decision_reference": 1440.0
+    }
+  },
+  "A.5x": {
+    "1": {
+      "cost_reference": 7233.3926721882035,
+      "decision_reference": 1440.0
+    },
+    "2": {
+      "cost_reference": 5331.011948901246,
+      "decision_reference": 1440.0
+    },
+    "3": {
+      "cost_reference": 4683.058744754114,
+      "decision_reference": 1440.0
+    },
+    "4": {
+      "cost_reference": 5391.710504256221,
+      "decision_reference": 1440.0
+    },
+    "5": {
+      "cost_reference": 5401.276579425546,
+      "decision_reference": 1440.0
+    }
+  },
+  "B.3x": {
+    "1": {
+      "cost_reference": 1846.8253940466218,
+      "decision_reference": 1440.0
+    },
+    "2": {
+      "cost_reference": 1813.4933914078606,
+      "decision_reference": 1440.0
+    },
+    "3": {
+      "cost_reference": 1821.6310171277285,
+      "decision_reference": 1440.0
+    },
+    "4": {
+      "cost_reference": 1834.2051589874684,
+      "decision_reference": 1440.0
+    },
+    "5": {
+      "cost_reference": 1888.533333333333,
+      "decision_reference": 1440.0
+    },
+    "6": {
+      "cost_reference": 1879.6699999999994,
+      "decision_reference": 1440.0
+    },
+    "7": {
+      "cost_reference": 1845.9925082581012,
+      "decision_reference": 1440.0
+    }
+  },
+  "SQL-A.3x": {
+    "1": {
+      "cost_reference": 2790.070835724223,
+      "decision_reference": 1440
+    },
+    "2": {
+      "cost_reference": 2788.61,
+      "decision_reference": 1440
+    },
+    "3": {
+      "cost_reference": 2726.1883333333344,
+      "decision_reference": 1440
+    },
+    "4": {
+      "cost_reference": 3059.6666666666665,
+      "decision_reference": 1440
+    },
+    "5": {
+      "cost_reference": 2941.1533333333327,
+      "decision_reference": 1440
+    },
+    "6": {
+      "cost_reference": 2736.090267574391,
+      "decision_reference": 1440
+    },
+    "7": {
+      "cost_reference": 2815.402554835012,
+      "decision_reference": 1440
+    }
+  },
+  "SQL-A.5x": {
+    "1": {
+      "cost_reference": 7232.806968749853,
+      "decision_reference": 1440
+    },
+    "2": {
+      "cost_reference": 5329.897176695349,
+      "decision_reference": 1440
+    },
+    "3": {
+      "cost_reference": 4681.06638918082,
+      "decision_reference": 1440
+    },
+    "4": {
+      "cost_reference": 5390.050149215529,
+      "decision_reference": 1440
+    },
+    "5": {
+      "cost_reference": 5399.7547406043805,
+      "decision_reference": 1440
+    }
+  },
+  "SQL-B.3x": {
+    "1": {
+      "cost_reference": 1791.9207763090064,
+      "decision_reference": 1440
+    },
+    "2": {
+      "cost_reference": 1746.4688668530243,
+      "decision_reference": 1440
+    },
+    "3": {
+      "cost_reference": 1745.7523827782816,
+      "decision_reference": 1440
+    },
+    "4": {
+      "cost_reference": 1695.5034572606157,
+      "decision_reference": 1440
+    },
+    "5": {
+      "cost_reference": 1737.2833333333333,
+      "decision_reference": 1440
+    },
+    "6": {
+      "cost_reference": 1782.2376267184507,
+      "decision_reference": 1440
+    },
+    "7": {
+      "cost_reference": 1793.3663195728925,
+      "decision_reference": 1440
+    }
+  }
+}
